@@ -8,9 +8,14 @@ namespace UnitTestLearning.LogAnalyzer
 {
     public class LogAnalyzer
     {
-		public bool IsValidFileName(string fileName)
+		public bool IsValidLogFileName(string filename)
 		{
-			if (!fileName.EndsWith(".SLF", StringComparison.CurrentCultureIgnoreCase))
+			if (string.IsNullOrEmpty(filename))
+			{
+				throw new ArgumentException("filename has to be provided.");
+			}
+
+			if (!filename.EndsWith(".SLF", StringComparison.CurrentCultureIgnoreCase))
 			{
 				return false;
 			}

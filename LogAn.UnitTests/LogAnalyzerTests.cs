@@ -9,27 +9,41 @@ namespace LogAn.UnitTests
 	{
 		private LogAnalyzer _analyzer = null;
 
-		[SetUp]
-		public void Setup()
-		{
-			_analyzer = CreateAnalyzer();
-		}
+		//[SetUp]
+		//public void Setup()
+		//{
+		//	_analyzer = CreateAnalyzer();
+		//}
 
 		[Test]
-		public void IsValidFileName_BadExtension_ReturnsFalse()
+		public void IsValidLogFileName_BadExtension_ReturnsFalse()
 		{
-			bool result = _analyzer.IsValidFileName("filewithbadextension.foo");
+			LogAnalyzer analyzer = CreateAnalyzer();
+
+			bool result = analyzer.IsValidLogFileName("filewithbadextension.foo");
 
 			Assert.False(result);
 		}
 
 		[TestCase("filewithgoodextension.SLF",true)]
 		[TestCase("filewithgoodextension.slf",true)]
-		public void IsValidFileName_GoodExtension_ReturnsTrue(string filename, bool expected)
+		public void IsValidLogFileName_GoodExtension_ReturnsTrue(string filename, bool expected)
 		{
-			bool result = _analyzer.IsValidFileName(filename);
+			LogAnalyzer analyzer = CreateAnalyzer();
+
+			bool result = analyzer.IsValidLogFileName(filename);
 
 			Assert.AreEqual(expected, result);
+		}
+
+		[Test]
+		public void IsValidLogFileName_EmptyFileName_Throws()
+		{
+			LogAnalyzer analyzer = CreateAnalyzer();
+
+			Exception ex = Assert.Catch<Exception>(() => analyzer.IsValidLogFileName(""));
+
+			StringAssert.Contains("filename has to be provided", ex.Message);
 		}
 
 		private LogAnalyzer CreateAnalyzer()
