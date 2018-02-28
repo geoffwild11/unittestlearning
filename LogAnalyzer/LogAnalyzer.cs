@@ -10,7 +10,7 @@ namespace UnitTestLearning.LogAnalyzer
     {
 		public bool IsValidFileName(string fileName)
 		{
-			if (!fileName.EndsWith(".SLF"))
+			if (!fileName.EndsWith(".SLF", StringComparison.CurrentCultureIgnoreCase))
 			{
 				return false;
 			}
